@@ -1,0 +1,17 @@
+.login-container {
+    max-width: 300px;
+    margin: auto;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+label, input {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+button { 
+    width: 100%;
+    padding: 0.5em;
+}
