@@ -1,17 +1,109 @@
 .login-container {
-    max-width: 300px;
-    margin: auto;
-    padding: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+    display: flex;
+    height: 100vh;
+  }
 
-label, input {
-    display: block;
-    margin-bottom: 0.5em;
-}
+  .login-left, .login-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
 
-button { 
+  .login-left {
+    flex-direction: column;
+    background-color: #f5f5f5;
+  }
+
+  .login-right {
+    flex-direction: column;
+    background-color: white;
+  }
+
+  .login-left h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .login-right h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .login-left p {
+    margin-bottom: 1rem;
+  }
+
+  .login-left form {
     width: 100%;
-    padding: 0.5em;
-}
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login-left form label {
+    margin-top: 1rem;
+  }
+
+  .login-left form input {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px
+  }
+
+  .login-left .btn {
+    padding: 0.75rem
+    margin-top: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .login-left .btn-google {
+    background-color: #db4437;
+    color: white;
+  }
+
+  .login-left .btn-apple {
+    background-color: #000000;
+    color: white;
+  }
+
+  .login-left .btn-signin {
+    background-color: #4a90e2;
+    color: white;
+  }
+
+  .divider {
+    position: relative; /* needed for pseudo-elements */
+    width: 8px;
+    height: 80%; /* makes it look elegant, not wall-to-wall */
+    align-self: center;
+    background: linear-gradient(to bottom, #00c6ff, #0072ff);
+    box-shadow: 0 0 15px rgba(0, 114, 255, 0.6), 0 0 30px rgba(0, 114, 255, 0.4);
+    border-radius: 4px;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+  }
+
+  .divider::before {
+    top: -10px;
+    border-bottom: 10px solid #00c6ff; /* match top color */
+    filter: drop-shadow(0 0 5px #00c6ff);
+  }
+
+  .divider::after {
+    bottom: -10px;
+    border-top: 10px solid #0072ff; /* match bottom color */
+    filter: drop-shadow(0 0 5px #0072ff);
+  }
