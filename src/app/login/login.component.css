@@ -1,34 +1,61 @@
-.login-container {
-    display: flex;
-    height: 100vh;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  .login-left, .login-right {
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* remove horizontal scroll */
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f0f0f0; /* background outside login container */
+}
+
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw; /* full viewport width */
+}
+
+
+  .login-left {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    border-radius: 20px;
   }
 
   .login-left {
     flex-direction: column;
-    background-color: #f5f5f5;
+    background: linear-gradient(135deg, #dd0031, #a300f0); /* red to purple */
   }
 
   .login-right {
-    flex-direction: column;
-    background-color: white;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: black; /* fallback if gif doesn’t fill */
   }
+
+
 
   .login-left h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
+    color: white;
   }
 
-  .login-right h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+  .login-left h1 {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    margin: 0;
+    font-size: 1.5rem;
+    color: white;
   }
 
   .login-left p {
@@ -40,10 +67,15 @@
     max-width: 300px;
     display: flex;
     flex-direction: column;
+    padding-bottom: 1rem;
   }
 
   .login-left form label {
     margin-top: 1rem;
+  }
+
+  .login-left label {
+    color: white
   }
 
   .login-left form input {
@@ -54,56 +86,160 @@
   }
 
   .login-left .btn {
-    padding: 0.75rem
+    padding: 1.75rem
     margin-top: 1rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
 
-  .login-left .btn-google {
-    background-color: #db4437;
-    color: white;
+  .login-right .btn {
+      padding: 1.75rem
+      margin-top: 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+  .login-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0; /* spacing above and below */
+    color: #666; /* text color */
+    font-weight: 500;
   }
 
-  .login-left .btn-apple {
-    background-color: #000000;
-    color: white;
+  .login-divider::before,
+  .login-divider::after {
+    content: "";
+    flex: 1; /* take up remaining space */
+    border-bottom: 1px solid #ccc; /* line style */
+    margin: 0 0.75rem; /* space between line and text */
   }
+
+
+  .gsi-material-button {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-appearance: none;
+    background-color: WHITE;
+    background-image: none;
+    border: 1px solid #747775;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #1f1f1f;
+    cursor: pointer;
+    font-family: 'Roboto', arial, sans-serif;
+    font-size: 14px;
+    height: 40px;
+    letter-spacing: 0.25px;
+    outline: none;
+    overflow: hidden;
+    padding: 0 12px;
+    position: relative;
+    text-align: center;
+    -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
+    transition: background-color .218s, border-color .218s, box-shadow .218s;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+    max-width: 400px;
+    min-width: min-content;
+  }
+
+  .gsi-material-button .gsi-material-button-icon {
+    height: 20px;
+    margin-right: 12px;
+    min-width: 20px;
+    width: 20px;
+  }
+
+  .gsi-material-button .gsi-material-button-content-wrapper {
+    -webkit-align-items: center;
+    align-items: center;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    height: 100%;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+  }
+
+  .gsi-material-button .gsi-material-button-contents {
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    font-family: 'Roboto', arial, sans-serif;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+  }
+
+  .gsi-material-button .gsi-material-button-state {
+    -webkit-transition: opacity .218s;
+    transition: opacity .218s;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .gsi-material-button:disabled {
+    cursor: default;
+    background-color: #ffffff61;
+    border-color: #1f1f1f1f;
+  }
+
+  .gsi-material-button:disabled .gsi-material-button-contents {
+    opacity: 38%;
+  }
+
+  .gsi-material-button:disabled .gsi-material-button-icon {
+    opacity: 38%;
+  }
+
+  .gsi-material-button:not(:disabled):active .gsi-material-button-state,
+  .gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+    background-color: #303030;
+    opacity: 12%;
+  }
+
+  .gsi-material-button:not(:disabled):hover {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+  }
+
+  .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+    background-color: #303030;
+    opacity: 8%;
+  }
+
+
+  .login-left .btn-apple {
+    color: black;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    background-color: #f5f5f5;
+
+  }
+
+  .btn i {
+    margin-right: 0.5rem;
+  }
+
 
   .login-left .btn-signin {
     background-color: #4a90e2;
     color: white;
-  }
-
-  .divider {
-    position: relative; /* needed for pseudo-elements */
-    width: 8px;
-    height: 80%; /* makes it look elegant, not wall-to-wall */
-    align-self: center;
-    background: linear-gradient(to bottom, #00c6ff, #0072ff);
-    box-shadow: 0 0 15px rgba(0, 114, 255, 0.6), 0 0 30px rgba(0, 114, 255, 0.4);
-    border-radius: 4px;
-  }
-
-  .divider::before,
-  .divider::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-  }
-
-  .divider::before {
-    top: -10px;
-    border-bottom: 10px solid #00c6ff; /* match top color */
-    filter: drop-shadow(0 0 5px #00c6ff);
-  }
-
-  .divider::after {
-    bottom: -10px;
-    border-top: 10px solid #0072ff; /* match bottom color */
-    filter: drop-shadow(0 0 5px #0072ff);
+    padding: 1rem;
+    margin-top: 1rem;
   }
