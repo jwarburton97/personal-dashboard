@@ -1,0 +1,30 @@
+<div class="signup-container">
+  <div class = "signup-page">
+    <h1>Personal Dashboard</h1>
+    <h2>Create Account</h2>
+
+    <form>
+
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" name="firstName" placeholder="Enter First Name" required/>
+
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" name="lastName" placeholder="Enter Last Name" required/>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="Enter Email Address" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter Strong Password" pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$"
+             title="8-16 characters, at least 1 uppercase letter and 1 special character"
+             required/>
+
+      <button type="submit" class="btn btn-signup">Submit</button>
+
+
+    </form>
+
+  </div>
+
+
+</div>
