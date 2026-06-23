@@ -1,25 +1,27 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-<div class="login-container">
+<div class="auth-container">
+  <h1 class="glass-header">Personal Dashboard</h1>
 
-    <div class="login-left">
-      <h1>Personal Dashboard</h1>
-        <h2>Welcome Back!</h2>
+  <div class="split-container">
+    <!-- Left Side - Login -->
+    <div class="auth-side login-side">
+      <h2>Welcome Back!</h2>
 
+      <form>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" />
 
-     <!-- <button class="btn btn-apple">
-        <i class="fab fa-apple" style="color:#FFFFFF"></i> Sign in with Apple
-      </button> -->
-       <form>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter username" />
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" />
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter password" />
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
 
-            <button type="submit" class="btn btn-signin">Login</button>
+      <div class="divider">
+        <span>OR</span>
+      </div>
 
-        </form>
       <button class="gsi-material-button">
         <div class="gsi-material-button-state"></div>
         <div class="gsi-material-button-content-wrapper">
@@ -36,8 +38,54 @@
           <span style="display: none;">Sign in with Google</span>
         </div>
       </button>
-      <p style="color: white; padding-top: 1rem;">New here? <a [routerLink]="['/signup']">Sign up</a></p>
 
+      <button class="social-button github-button">
+        <i class="fab fa-github"></i>
+        <span>Sign in with GitHub</span>
+      </button>
+
+      <button class="social-button apple-button">
+        <i class="fab fa-apple"></i>
+        <span>Sign in with Apple</span>
+      </button>
     </div>
+
+    <!-- Center Divider -->
+    <div class="vertical-divider"></div>
+
+    <!-- Right Side - Sign Up -->
+    <div class="auth-side signup-side" [class.expanded]="showSignupForm">
+      <div class="signup-trigger" *ngIf="!showSignupForm" (click)="toggleSignupForm()">
+        <h2>New Here?</h2>
+        <p class="click-hint">Click to create an account</p>
+      </div>
+
+      <div class="signup-form-container" *ngIf="showSignupForm">
+        <div class="header-with-back">
+          <button class="back-btn" (click)="toggleSignupForm()">←</button>
+          <h2>Create Account</h2>
+        </div>
+
+        <form>
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" placeholder="Enter First Name" required/>
+
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" placeholder="Enter Last Name" required/>
+
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter Email Address" required />
+
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" name="signupPassword" placeholder="Enter Strong Password"
+                 pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$"
+                 title="8-16 characters, at least 1 uppercase letter and 1 special character"
+                 required/>
+
+          <button type="submit" class="btn btn-primary">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
