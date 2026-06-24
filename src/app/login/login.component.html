@@ -6,23 +6,50 @@
   <div class="split-container">
     <!-- Left Side - Login -->
     <div class="auth-side login-side">
-      <h2>Welcome Back!</h2>
+      <h2 *ngIf="!showForgotPassword">Welcome Back!</h2>
 
-      <form>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" placeholder="Enter username" />
+      <div class="message error-message" *ngIf="errorMessage && !showSignupForm && !showForgotPassword">{{ errorMessage }}</div>
+      <div class="message success-message" *ngIf="successMessage && !showSignupForm && !showForgotPassword">{{ successMessage }}</div>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Enter password" />
+      <!-- Forgot Password Form -->
+      <div class="forgot-password-container" *ngIf="showForgotPassword">
+        <button class="back-link" (click)="toggleForgotPassword()" type="button">← Back to login</button>
+        <h3>Reset Password</h3>
+        <p class="help-text">Enter your email and we'll send you a reset link</p>
 
-        <button type="submit" class="btn btn-primary">Login</button>
+        <div class="message error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+        <div class="message success-message" *ngIf="successMessage">{{ successMessage }}</div>
+
+        <form (submit)="onForgotPassword(); $event.preventDefault()">
+          <label for="forgotEmail">Email</label>
+          <input type="email" id="forgotEmail" name="forgotEmail" [(ngModel)]="forgotPasswordEmail" placeholder="Enter your email" required />
+
+          <button type="submit" class="btn btn-primary" [disabled]="loading">
+            {{ loading ? 'Sending...' : 'Send Reset Link' }}
+          </button>
+        </form>
+      </div>
+
+      <!-- Login Form -->
+      <form (submit)="onLogin(); $event.preventDefault()" *ngIf="!showForgotPassword">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" name="loginEmail" [(ngModel)]="loginEmail" placeholder="Enter email" required />
+
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" name="loginPassword" [(ngModel)]="loginPassword" placeholder="Enter password" required />
+
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          {{ loading ? 'Logging in...' : 'Login' }}
+        </button>
+
+        <a class="forgot-password-link" (click)="toggleForgotPassword()">Forgot password?</a>
       </form>
 
-      <div class="divider">
+      <div class="divider" *ngIf="!showForgotPassword">
         <span>OR</span>
       </div>
 
-      <button class="gsi-material-button">
+      <button class="gsi-material-button" (click)="signInWithGoogle()" type="button" *ngIf="!showForgotPassword">
         <div class="gsi-material-button-state"></div>
         <div class="gsi-material-button-content-wrapper">
           <div class="gsi-material-button-icon">
@@ -39,12 +66,12 @@
         </div>
       </button>
 
-      <button class="social-button github-button">
+      <button class="social-button github-button" (click)="signInWithGithub()" type="button" *ngIf="!showForgotPassword">
         <i class="fab fa-github"></i>
         <span>Sign in with GitHub</span>
       </button>
 
-      <button class="social-button apple-button">
+      <button class="social-button apple-button" (click)="signInWithApple()" type="button" *ngIf="!showForgotPassword">
         <i class="fab fa-apple"></i>
         <span>Sign in with Apple</span>
       </button>
@@ -62,27 +89,32 @@
 
       <div class="signup-form-container" *ngIf="showSignupForm">
         <div class="header-with-back">
-          <button class="back-btn" (click)="toggleSignupForm()">←</button>
+          <button class="back-btn" (click)="toggleSignupForm()" type="button">←</button>
           <h2>Create Account</h2>
         </div>
 
-        <form>
+        <div class="message error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+        <div class="message success-message" *ngIf="successMessage">{{ successMessage }}</div>
+
+        <form (submit)="onSignup(); $event.preventDefault()">
           <label for="firstName">First Name</label>
-          <input type="text" id="firstName" name="firstName" placeholder="Enter First Name" required/>
+          <input type="text" id="firstName" name="firstName" [(ngModel)]="signupFirstName" placeholder="Enter First Name" required/>
 
           <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" name="lastName" placeholder="Enter Last Name" required/>
+          <input type="text" id="lastName" name="lastName" [(ngModel)]="signupLastName" placeholder="Enter Last Name" required/>
 
-          <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" placeholder="Enter Email Address" required />
+          <label for="signupEmail">Email Address</label>
+          <input type="email" id="signupEmail" name="signupEmail" [(ngModel)]="signupEmail" placeholder="Enter Email Address" required />
 
           <label for="signupPassword">Password</label>
-          <input type="password" id="signupPassword" name="signupPassword" placeholder="Enter Strong Password"
+          <input type="password" id="signupPassword" name="signupPassword" [(ngModel)]="signupPassword" placeholder="Enter Strong Password"
                  pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$"
                  title="8-16 characters, at least 1 uppercase letter and 1 special character"
                  required/>
 
-          <button type="submit" class="btn btn-primary">Create Account</button>
+          <button type="submit" class="btn btn-primary" [disabled]="loading">
+            {{ loading ? 'Creating Account...' : 'Create Account' }}
+          </button>
         </form>
       </div>
     </div>
