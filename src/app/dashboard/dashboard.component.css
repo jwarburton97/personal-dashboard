@@ -13,22 +13,38 @@
   gap: 1rem;
 }
 
-.glass-text {
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.7) 25%,
-    rgba(200, 220, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0.7) 75%,
-    rgba(255, 255, 255, 1) 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4))
-          drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.profile-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  text-decoration: none;
+}
+
+.profile-btn:hover {
+  background: rgba(99, 102, 241, 0.3);
+  border-color: rgba(99, 102, 241, 0.5);
+  transform: translateY(-2px);
+}
+
+.dashboard-logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 .logout-btn {
@@ -140,8 +156,8 @@
     padding: 1rem;
   }
 
-  .glass-text {
-    font-size: 1.8rem;
+  .dashboard-logo {
+    height: 50px;
   }
 
   .stats-grid {

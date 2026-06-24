@@ -2,17 +2,22 @@
 
 <div class="dashboard-container">
   <header class="dashboard-header">
-    <h1 class="glass-text">Personal Dashboard</h1>
-    <button class="logout-btn" (click)="logout()">
-      <span>Logout</span>
-      <i class="fas fa-sign-out-alt"></i>
-    </button>
+    <img src="dashboard-logo.jpg" alt="Dashboard Logo" class="dashboard-logo" />
+    <div class="header-actions">
+      <button class="profile-btn" routerLink="/profile">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </button>
+      <button class="logout-btn" (click)="logout()">
+        <span>Logout</span>
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
   </header>
 
   <main class="dashboard-content">
     <div class="welcome-card">
       <h2>Welcome back<span *ngIf="firstName">, {{ firstName }}</span>!</h2>
-      <p class="user-email">{{ user?.email }}</p>
 
       <div class="stats-grid">
         <div class="stat-card">
