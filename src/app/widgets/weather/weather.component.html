@@ -1,0 +1,55 @@
+<div class="weather-widget">
+  <div class="widget-header">
+    <h3><i class="fas fa-cloud-sun"></i> Weather</h3>
+    <button class="refresh-btn" (click)="refreshWeather()" [disabled]="loading">
+      <i class="fas fa-sync-alt" [class.spinning]="loading"></i>
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading weather...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error && !loading">
+    <i class="fas fa-exclamation-triangle"></i>
+    <p>{{ error }}</p>
+    <button class="retry-btn" (click)="refreshWeather()">Retry</button>
+  </div>
+
+  <!-- Weather Content -->
+  <div class="weather-content" *ngIf="weather && !loading">
+    <div class="location">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>{{ weather.name }}, {{ weather.sys.country }}</span>
+    </div>
+
+    <div class="main-weather">
+      <img [src]="getWeatherIcon(weather.weather[0].icon)" [alt]="weather.weather[0].description" class="weather-icon" />
+      <div class="temp-info">
+        <div class="temperature">{{ weather.main.temp | number:'1.0-0' }}°F</div>
+        <div class="description">{{ weather.weather[0].description }}</div>
+      </div>
+    </div>
+
+    <div class="weather-details">
+      <div class="detail-item">
+        <i class="fas fa-temperature-high"></i>
+        <span class="label">Feels Like</span>
+        <span class="value">{{ weather.main.feels_like | number:'1.0-0' }}°F</span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-tint"></i>
+        <span class="label">Humidity</span>
+        <span class="value">{{ weather.main.humidity }}%</span>
+      </div>
+      <div class="detail-item">
+        <i class="fas fa-wind"></i>
+        <span class="label">Wind</span>
+        <span class="value">{{ weather.wind.speed | number:'1.0-0' }} mph</span>
+      </div>
+    </div>
+  </div>
+</div>

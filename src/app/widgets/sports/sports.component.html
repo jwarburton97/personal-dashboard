@@ -1,0 +1,133 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<!-- Widget Card View -->
+<div class="sports-widget" *ngIf="currentStep === 'scores'">
+  <div class="widget-header">
+    <h3><i class="fas fa-trophy"></i> Sports</h3>
+    <button class="add-team-btn" (click)="addAnotherTeam()">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="favoriteTeams.length === 0">
+    <i class="fas fa-star"></i>
+    <p>No favorite teams yet</p>
+    <button class="setup-btn" (click)="addAnotherTeam()">
+      <i class="fas fa-plus"></i> Add Teams
+    </button>
+  </div>
+
+  <!-- Scores View -->
+  <div class="scores-view" *ngIf="favoriteTeams.length > 0">
+    <!-- Games List -->
+    <div class="games-list">
+      <div class="game-card" *ngFor="let game of games" [class.live]="game.status === 'live'">
+        <div class="game-status">
+          <span class="status-badge" [class.live]="game.status === 'live'" [class.final]="game.status === 'final'">
+            {{ game.status === 'live' ? 'LIVE' : game.status === 'final' ? 'FINAL' : 'SCHEDULED' }}
+          </span>
+          <span class="game-time" *ngIf="game.time">{{ game.time }}</span>
+        </div>
+        <div class="game-teams">
+          <div class="team-row">
+            <span class="team-name">{{ game.awayTeam }}</span>
+            <span class="team-score">{{ game.awayScore }}</span>
+          </div>
+          <div class="team-row">
+            <span class="team-name">{{ game.homeTeam }}</span>
+            <span class="team-score">{{ game.homeScore }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty state if no games -->
+    <div class="empty-scores" *ngIf="games.length === 0">
+      <i class="fas fa-calendar-times"></i>
+      <p>No games scheduled</p>
+    </div>
+  </div>
+</div>
+
+<!-- Selection Modal Overlay -->
+<div class="selection-modal" *ngIf="currentStep !== 'scores'">
+  <div class="modal-content">
+    <button class="close-modal" (click)="closeSelection()" *ngIf="favoriteTeams.length > 0">
+      <i class="fas fa-times"></i>
+    </button>
+
+      <!-- Step 1: Select Sport -->
+    <div class="selection-view" *ngIf="currentStep === 'sport'">
+      <div class="prompt-message">
+        <i class="fas fa-star"></i>
+        <h4>Select Your Favorite Sport</h4>
+        <p>Choose a sport to get started</p>
+      </div>
+      <div class="sport-grid">
+        <div class="sport-card" *ngFor="let sport of sports" (click)="selectSport(sport.id)">
+          <div class="sport-icon">{{ sport.icon }}</div>
+          <span class="sport-name">{{ sport.name }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Select League -->
+    <div class="selection-view" *ngIf="currentStep === 'league'">
+      <button class="back-btn" (click)="backToSport()">
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+      <div class="prompt-message">
+        <h4>Select a League</h4>
+        <p>Choose your preferred league</p>
+      </div>
+      <div class="league-list">
+        <div class="league-item" *ngFor="let league of availableLeagues" (click)="selectLeague(league.id)">
+          <span>{{ league.name }}</span>
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Select Conference (NCAA only) -->
+    <div class="selection-view" *ngIf="currentStep === 'conference'">
+      <button class="back-btn" (click)="backToLeague()">
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+      <div class="prompt-message">
+        <h4>Select a Conference</h4>
+        <p>Choose your team's conference</p>
+      </div>
+      <div class="league-list">
+        <div class="league-item" *ngFor="let conference of availableConferences" (click)="selectConference(conference.id)">
+          <span>{{ conference.name }}</span>
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: Select Team -->
+    <div class="selection-view" *ngIf="currentStep === 'team'">
+      <button class="back-btn" (click)="selectedConference ? backToConference() : backToLeague()">
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+      <div class="prompt-message">
+        <h4>Select Your Teams</h4>
+        <p>Pick or remove your favorite teams</p>
+      </div>
+      <div class="team-list">
+        <div class="team-item"
+             *ngFor="let team of availableTeams"
+             (click)="toggleTeam(team)"
+             [class.selected]="isTeamSelected(team.id)">
+          <span>{{ team.city }} {{ team.name }}</span>
+          <i class="fas fa-check" *ngIf="isTeamSelected(team.id)"></i>
+          <i class="fas fa-chevron-right" *ngIf="!isTeamSelected(team.id)"></i>
+        </div>
+      </div>
+      <button class="done-btn" *ngIf="favoriteTeams.length > 0" (click)="closeSelection()">
+        Done
+      </button>
+    </div>
+  </div>
+</div>

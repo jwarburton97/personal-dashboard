@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<div class="stocks-widget">
+  <div class="widget-header">
+    <h3><i class="fas fa-chart-line"></i> Stocks</h3>
+    <button class="refresh-btn" (click)="refreshStocks()" [disabled]="loading">
+      <i class="fas fa-sync-alt" [class.spinning]="loading"></i>
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading stocks...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error && !loading">
+    <i class="fas fa-exclamation-triangle"></i>
+    <p>{{ error }}</p>
+    <button class="retry-btn" (click)="refreshStocks()">Retry</button>
+  </div>
+
+  <!-- Stocks List -->
+  <div class="stocks-list" *ngIf="!loading && stocks.length > 0">
+    <div class="stock-item" *ngFor="let stock of stocks" (click)="expandStock(stock)" [class.positive]="stock.change >= 0" [class.negative]="stock.change < 0">
+      <div class="stock-info">
+        <div class="symbol">{{ stock.symbol }}</div>
+        <div class="name">{{ stock.name }}</div>
+      </div>
+      <div class="stock-price">
+        <div class="price">${{ formatPrice(stock.price) }}</div>
+        <div class="change">
+          <i class="fas" [class.fa-caret-up]="stock.change >= 0" [class.fa-caret-down]="stock.change < 0"></i>
+          {{ formatPercent(stock.changePercent) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Expanded Modal -->
+<div class="modal-overlay" *ngIf="expanded" (click)="closeExpanded()">
+  <div class="modal-content" *ngIf="selectedStock" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <h2>{{ selectedStock.symbol }}</h2>
+        <p class="company-name">{{ selectedStock.name }}</p>
+      </div>
+      <button class="close-modal-btn" (click)="closeExpanded()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="price-section">
+        <div class="current-price">${{ formatPrice(selectedStock.price) }}</div>
+        <div class="price-change" [class.positive]="selectedStock.change >= 0" [class.negative]="selectedStock.change < 0">
+          {{ formatChange(selectedStock.change) }} ({{ formatPercent(selectedStock.changePercent) }})
+        </div>
+      </div>
+
+      <div class="stock-details-grid">
+        <div class="detail-card">
+          <div class="detail-label">Open</div>
+          <div class="detail-value">${{ formatPrice(selectedStock.open) }}</div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-label">Previous Close</div>
+          <div class="detail-value">${{ formatPrice(selectedStock.previousClose) }}</div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-label">Day High</div>
+          <div class="detail-value">${{ formatPrice(selectedStock.high) }}</div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-label">Day Low</div>
+          <div class="detail-value">${{ formatPrice(selectedStock.low) }}</div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-label">Volume</div>
+          <div class="detail-value">{{ formatVolume(selectedStock.volume) }}</div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-label">Change</div>
+          <div class="detail-value" [class.positive]="selectedStock.change >= 0" [class.negative]="selectedStock.change < 0">
+            {{ formatChange(selectedStock.change) }}
+          </div>
+        </div>
+      </div>
+
+      <button class="remove-btn" (click)="removeStock(selectedStock.symbol); closeExpanded()">
+        <i class="fas fa-trash"></i> Remove from Watchlist
+      </button>
+    </div>
+  </div>
+</div>

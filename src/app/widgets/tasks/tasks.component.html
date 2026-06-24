@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<div class="tasks-widget">
+  <div class="widget-header">
+    <h3><i class="fas fa-check-circle"></i> Tasks</h3>
+    <span class="task-count">{{ activeTasks.length }}</span>
+  </div>
+
+  <!-- Add Task Input -->
+  <div class="add-task-section">
+    <input
+      type="text"
+      [(ngModel)]="newTaskText"
+      (keyup.enter)="addTask()"
+      placeholder="Add a new task..."
+      class="task-input"
+    />
+    <button class="add-btn" (click)="addTask()" [disabled]="!newTaskText.trim()">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="tasks.length === 0">
+    <i class="fas fa-clipboard-list"></i>
+    <p>No tasks yet</p>
+    <span>Add your first task to get started!</span>
+  </div>
+
+  <!-- Tasks List -->
+  <div class="tasks-list" *ngIf="tasks.length > 0">
+    <!-- Active Tasks -->
+    <div class="task-item" *ngFor="let task of activeTasks" [class.completed]="task.completed">
+      <div class="task-checkbox">
+        <input
+          type="checkbox"
+          [id]="'task-' + task.id"
+          [checked]="task.completed"
+          (change)="toggleTask(task)"
+        />
+        <label [for]="'task-' + task.id"></label>
+      </div>
+      <span class="task-text">{{ task.text }}</span>
+      <button class="delete-btn" (click)="deleteTask(task.id)">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+
+    <!-- Completed Tasks -->
+    <div class="completed-section" *ngIf="completedTasks.length > 0">
+      <div class="section-divider">
+        <span>Completed ({{ completedTasks.length }})</span>
+      </div>
+      <div class="task-item completed" *ngFor="let task of completedTasks">
+        <div class="task-checkbox">
+          <input
+            type="checkbox"
+            [id]="'task-' + task.id"
+            [checked]="task.completed"
+            (change)="toggleTask(task)"
+          />
+          <label [for]="'task-' + task.id"></label>
+        </div>
+        <span class="task-text">{{ task.text }}</span>
+        <button class="delete-btn" (click)="deleteTask(task.id)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
