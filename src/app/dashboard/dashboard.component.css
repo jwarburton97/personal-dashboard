@@ -118,6 +118,18 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
+.widget-card {
+  padding: 0;
+  background: transparent;
+  border: none;
+  min-height: 400px;
+}
+
+.widget-card:hover {
+  background: transparent;
+  transform: none;
+}
+
 .stat-icon {
   font-size: 2rem;
 }

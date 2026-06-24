@@ -20,12 +20,12 @@
       <h2>Welcome back<span *ngIf="firstName">, {{ firstName }}</span>!</h2>
 
       <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon">📊</div>
-          <div class="stat-info">
-            <h3>Dashboard</h3>
-            <p>Coming soon</p>
-          </div>
+        <div class="stat-card widget-card">
+          <app-weather></app-weather>
+        </div>
+
+        <div class="stat-card widget-card">
+          <app-stocks></app-stocks>
         </div>
 
         <div class="stat-card">
@@ -40,14 +40,6 @@
           <div class="stat-icon">📈</div>
           <div class="stat-info">
             <h3>Analytics</h3>
-            <p>Coming soon</p>
-          </div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">⚙️</div>
-          <div class="stat-info">
-            <h3>Settings</h3>
             <p>Coming soon</p>
           </div>
         </div>

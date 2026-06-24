@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { User } from '@supabase/supabase-js';
+import { WeatherComponent } from '../widgets/weather/weather.component';
+import { StocksComponent } from '../widgets/stocks/stocks.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, WeatherComponent, StocksComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
