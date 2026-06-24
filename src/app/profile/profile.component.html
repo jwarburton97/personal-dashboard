@@ -1,0 +1,132 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<div class="profile-container">
+  <header class="profile-header">
+    <div class="header-row">
+      <img src="dashboard-logo.jpg" alt="Dashboard Logo" class="profile-logo" />
+      <h2 class="page-title">My Profile</h2>
+      <button class="close-btn" (click)="goBack()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="profile-content">
+    <!-- Messages -->
+    <div class="message success-message" *ngIf="successMessage">{{ successMessage }}</div>
+    <div class="message error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <!-- Profile Card -->
+    <div class="profile-card">
+      <!-- Profile Avatar Section -->
+      <div class="profile-avatar-section">
+        <div class="avatar-wrapper">
+          <div class="avatar-circle" *ngIf="!profile.avatarUrl">
+            <i class="fas fa-user"></i>
+          </div>
+          <img *ngIf="profile.avatarUrl" [src]="profile.avatarUrl" alt="Profile" class="avatar-image" />
+          <button class="upload-btn" *ngIf="editMode" (click)="fileInput.click()" type="button">
+            <i class="fas fa-camera"></i>
+          </button>
+          <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" style="display: none;" />
+        </div>
+        <div class="profile-info">
+          <h2 *ngIf="!editMode">{{ profile.firstName }} {{ profile.lastName }}</h2>
+          <p class="email">{{ user?.email }}</p>
+          <p class="joined-date">Member since {{ getJoinedDate() }}</p>
+        </div>
+      </div>
+
+      <!-- Edit Toggle Button -->
+      <div class="action-buttons" *ngIf="!editMode">
+        <button class="btn btn-primary" (click)="toggleEditMode()">
+          <i class="fas fa-edit"></i> Edit Profile
+        </button>
+      </div>
+
+      <!-- View Mode -->
+      <div class="profile-details" *ngIf="!editMode">
+        <div class="detail-section">
+          <h3><i class="fas fa-info-circle"></i> About</h3>
+          <p class="bio">{{ profile.bio || 'No bio yet. Click Edit Profile to add one!' }}</p>
+        </div>
+
+        <div class="detail-section">
+          <h3><i class="fas fa-heart"></i> Interests</h3>
+          <div class="interests-display">
+            <span class="interest-tag" *ngFor="let interest of profile.interests">
+              {{ interest }}
+            </span>
+            <span class="no-data" *ngIf="profile.interests.length === 0">No interests selected yet.</span>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3><i class="fas fa-bullseye"></i> Primary Goal</h3>
+          <p class="goal">{{ profile.primaryGoal || 'No goal set yet.' }}</p>
+        </div>
+
+        <div class="detail-section">
+          <h3><i class="fas fa-globe"></i> Timezone</h3>
+          <p class="timezone">{{ profile.timezone }}</p>
+        </div>
+      </div>
+
+      <!-- Edit Mode -->
+      <form class="profile-form" *ngIf="editMode" (submit)="saveProfile(); $event.preventDefault()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName"><i class="fas fa-user"></i> First Name</label>
+            <input type="text" id="firstName" [(ngModel)]="profile.firstName" name="firstName" required />
+          </div>
+
+          <div class="form-group">
+            <label for="lastName"><i class="fas fa-user"></i> Last Name</label>
+            <input type="text" id="lastName" [(ngModel)]="profile.lastName" name="lastName" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bio"><i class="fas fa-pen"></i> Bio</label>
+          <textarea id="bio" [(ngModel)]="profile.bio" name="bio" rows="4"
+                    placeholder="Tell us about yourself..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-heart"></i> Interests (select all that apply)</label>
+          <div class="interests-grid">
+            <button type="button"
+                    class="interest-btn"
+                    [class.selected]="isInterestSelected(interest)"
+                    *ngFor="let interest of availableInterests"
+                    (click)="toggleInterest(interest)">
+              {{ interest }}
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="primaryGoal"><i class="fas fa-bullseye"></i> Primary Goal</label>
+          <select id="primaryGoal" [(ngModel)]="profile.primaryGoal" name="primaryGoal">
+            <option value="">Select a goal...</option>
+            <option *ngFor="let goal of goalOptions" [value]="goal">{{ goal }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="timezone"><i class="fas fa-globe"></i> Timezone</label>
+          <input type="text" id="timezone" [(ngModel)]="profile.timezone" name="timezone" readonly />
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="cancelEdit()" [disabled]="loading">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="loading">
+            {{ loading ? 'Saving...' : 'Save Changes' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
