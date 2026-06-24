@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1 class="glass-text">Personal Dashboard</h1>
+    <button class="logout-btn" (click)="logout()">
+      <span>Logout</span>
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </header>
+
+  <main class="dashboard-content">
+    <div class="welcome-card">
+      <h2>Welcome back<span *ngIf="firstName">, {{ firstName }}</span>!</h2>
+      <p class="user-email">{{ user?.email }}</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-info">
+            <h3>Dashboard</h3>
+            <p>Coming soon</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📝</div>
+          <div class="stat-info">
+            <h3>Tasks</h3>
+            <p>Coming soon</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📈</div>
+          <div class="stat-info">
+            <h3>Analytics</h3>
+            <p>Coming soon</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">⚙️</div>
+          <div class="stat-info">
+            <h3>Settings</h3>
+            <p>Coming soon</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>🎉 You're all set!</h3>
+      <p>Your authentication is working. Start building your dashboard features!</p>
+    </div>
+  </main>
+</div>
